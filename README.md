@@ -370,14 +370,86 @@ Les scripts SQL sont regroupés dans `sql/` (1 fichier par analyse).
 
 ## 6) Phase 3 – Data Product (ANALYTICS)
 
-Objectif : industrialiser les insights en tables réutilisables.
+### Objectif  
+Industrialiser les insights issus de la Phase 2 en **tables analytiques réutilisables**, stables et prêtes à être consommées par :
+- des dashboards (Streamlit / BI),
+- des analyses avancées,
+- des modèles de Machine Learning.
 
-Tables créées :
-- `ANALYTICS.SALES_ENRICHED` : ventes enrichies avec flags promo/campagne + variables temporelles
-- `ANALYTICS.ACTIVE_PROMOTIONS` : promotions normalisées (durée, discount)
-- `ANALYTICS.CUSTOMERS_ENRICHED` : clients enrichis (âge, segment de revenu)
+Cette phase correspond à un travail d’**Analytics Engineering** : on transforme des analyses ponctuelles en **produits data durables**.
 
-Exemple : `SALES_ENRICHED`
+---
+
+### Tables créées dans le schéma `ANALYTICS`
+
+#### `ANALYTICS.SALES_ENRICHED`
+**Objectif métier**  
+Centraliser les ventes et les enrichir avec des indicateurs marketing afin de mesurer l’impact réel :
+- des promotions,
+- des campagnes marketing,
+- du facteur temps.
+
+**Contenu**
+- Données de vente (transaction, date, région, montant)
+- Flags analytiques :
+  - période de promotion
+  - période de campagne
+- Variables temporelles (mois, jour de la semaine)
+
+**Cas d’usage**
+- Analyse ROI marketing
+- Comparaison ventes avec / sans promotion
+- Base pour modèles de prévision des ventes
+
+**Tables sources utilisées**
+- `SILVER.FINANCIAL_TRANSACTIONS_CLEAN`
+- `SILVER.PROMOTIONS_CLEAN`
+- `SILVER.MARKETING_CAMPAIGNS_CLEAN`
+
+---
+
+#### `ANALYTICS.ACTIVE_PROMOTIONS`
+**Objectif métier**  
+Disposer d’une table normalisée des promotions pour analyser leur efficacité selon :
+- la catégorie produit,
+- la région,
+- la durée.
+
+**Contenu**
+- Promotion, catégorie, région
+- Discount appliqué
+- Dates de début et de fin
+- Durée de la promotion (en jours)
+
+**Cas d’usage**
+- Analyse de la sensibilité aux promotions
+- Optimisation du calendrier promotionnel
+
+**Tables sources utilisées**
+- `SILVER.PROMOTIONS_CLEAN`
+
+---
+
+#### `ANALYTICS.CUSTOMERS_ENRICHED`
+**Objectif métier**  
+Créer une table client enrichie pour permettre une **segmentation marketing avancée**.
+
+**Contenu**
+- Informations démographiques
+- Âge calculé
+- Segment de revenu (Low / Medium / High)
+
+**Cas d’usage**
+- Ciblage marketing
+- Scoring client
+- Base pour modèles de churn ou de valeur client
+
+**Tables sources utilisées**
+- `SILVER.CUSTOMER_DEMOGRAPHICS_CLEAN`
+
+---
+
+### Exemple : création de `ANALYTICS.SALES_ENRICHED`
 
 ```sql
 CREATE OR REPLACE TABLE ANALYTICS.SALES_ENRICHED AS
@@ -416,6 +488,18 @@ LEFT JOIN promo_flag p ON s.transaction_id = p.transaction_id
 LEFT JOIN campaign_flag c ON s.transaction_id = c.transaction_id;
 ```
 
+### Résultat de la Phase 3
+
+À l’issue de cette phase, le projet dispose :
+
+- d’un **Data Product analytique cohérent**, construit à partir de données nettoyées et validées ;
+- de **tables analytiques documentées et réutilisables**, centralisées dans le schéma `ANALYTICS` ;
+- d’un **socle data prêt à l’emploi** pour :
+  - la création de dashboards décisionnels avec **Streamlit**,
+  - des **analyses marketing avancées** (ROI, segmentation, performance des campagnes),
+  - le développement de **modèles de Machine Learning** orientés marketing (segmentation clients, propension à l’achat, réponse aux promotions).
+
+
 ---
 
 ## 7) Streamlit (dashboards)
@@ -434,26 +518,43 @@ Connexion Snowflake via `.streamlit/secrets.toml` (non versionné).
 ## 8) Structure du projet
 
 ```
-project/
+SNOWFLAKE/
 ├── sql/
-│   ├── Load_data.sql
-│   ├── step4_verifications.sql
-│   ├── clean_data.sql
-│   ├── sales_trends.sql
-│   ├── promotion_impact.sql
-│   └── campaign_performance.sql
-├── Home.py
-├── pages/
-│   ├── 1_Sales_Dashboard.py
-│   ├── 2_Promotion_Analysis.py
-│   ├── 3_Marketing_ROI.py
-│   ├── 4_Customer_Segmentation.py
-│   └── 5_Operations_Logistics.py
-├── _utils.py
-├── .streamlit/
-│   └── secrets.toml   (local only)
-├── README.md
-└── business_insights.md
+│ ├── phase_1/
+│ │ ├── 1_preparation_environnement.sql
+│ │ ├── 2_creation_tables.sql
+│ │ ├── 3_chargement_donnée.sql
+│ │ ├── 4_verification_chargement.sql
+│ │ └── 5_clean_data.sql
+│ │
+│ ├── phase_2/
+│ │ ├── 1_comprehension_donné.sql
+│ │ ├── 2_analyses_exploratoires_descriptives.sql
+│ │ ├── 3.1_promotion_impact.sql
+│ │ ├── 3.2_campaign_performance.sql
+│ │ ├── 3.3_experience_client.sql
+│ │ └── 3.4_operation_et_logistique.sql
+│ │
+│ └── phase_3/
+│ └── 1_creation_data_product.sql
+│
+├── streamlit/
+│ ├── Home.py
+│ ├── _utils.py
+│ ├── pages/
+│ │ ├── sales_dashboard.py
+│ │ ├── promotion_analysis.py
+│ │ ├── marketing_roi.py
+│ │ ├── customer_segmentation.py
+│ │ └── operations_logistics.py
+│ └── .streamlit/
+│ └── secrets.toml (local only)
+│
+├── ml/
+│ └── (modèles Machine Learning – optionnel)
+│
+├── business_insights.md
+└── README.md
 ```
 
 ---
