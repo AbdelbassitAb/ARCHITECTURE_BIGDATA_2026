@@ -1,0 +1,62 @@
+--Phase 1 Data Preparation & Ingestion
+--Etape 1 Préparation de l’environnement Snowflake
+
+--Créer un warehouse
+CREATE OR REPLACE WAREHOUSE WH_LAB
+WITH
+  WAREHOUSE_SIZE = 'XSMALL'
+  AUTO_SUSPEND = 60
+  AUTO_RESUME = TRUE;
+
+--Utilise-le :
+USE WAREHOUSE WH_LAB;
+
+
+--Initialiser la base Snowflake
+CREATE OR REPLACE DATABASE ANYCOMPANY_LAB;
+
+CREATE OR REPLACE SCHEMA ANYCOMPANY_LAB.BRONZE;
+CREATE OR REPLACE SCHEMA ANYCOMPANY_LAB.SILVER;
+CREATE OR REPLACE SCHEMA ANYCOMPANY_LAB.ANALYTICS;
+
+--Préparer le chargement des données (Stage + formats)
+--1-File formats
+USE DATABASE ANYCOMPANY_LAB;
+USE SCHEMA BRONZE;
+
+--Format csv avec ',' comme séparateur
+
+CREATE OR REPLACE FILE FORMAT FF_CSV
+  TYPE = CSV
+  FIELD_DELIMITER = ','
+  SKIP_HEADER = 1
+  FIELD_OPTIONALLY_ENCLOSED_BY = '"'
+  TRIM_SPACE = TRUE
+  NULL_IF = ('', 'NULL');
+
+--Format csv avec '\t' tab , comme séparateur
+CREATE OR REPLACE FILE FORMAT FF_TSV
+  TYPE = CSV
+  FIELD_DELIMITER = '\t'
+  SKIP_HEADER = 1
+  FIELD_OPTIONALLY_ENCLOSED_BY = '"'
+  TRIM_SPACE = TRUE
+  NULL_IF = ('', 'NULL', 'null')
+  ERROR_ON_COLUMN_COUNT_MISMATCH = FALSE;
+
+-- Format JSON
+  
+
+CREATE OR REPLACE FILE FORMAT FF_JSON
+  TYPE = JSON
+  STRIP_OUTER_ARRAY = TRUE;
+
+
+--2- stage s3
+CREATE OR REPLACE STAGE STG_FOOD_BEVERAGE
+  URL = 's3://logbrain-datalake/datasets/food-beverage/'
+  FILE_FORMAT = FF_CSV;
+
+--test 
+LIST @STG_FOOD_BEVERAGE;
+
