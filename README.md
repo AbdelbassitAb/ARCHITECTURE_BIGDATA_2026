@@ -214,6 +214,7 @@ Pour chaque table BRONZE, nous avons créé une table SILVER en appliquant :
 4. **Gestion des doublons (IDs)**
    - Règle générale : **si un ID est censé être unique, on dédoublonne**
    - Méthode : `QUALIFY ROW_NUMBER()` avec un critère métier (date la plus récente ou “ligne la plus complète”)
+5. **Suppression des lignes avec la region 0 et 1 dans la table PROMOTION**
 
 ---
 
@@ -253,6 +254,7 @@ WHERE amount IS NULL OR amount <= 0;
 
 - validation de la période (start_date <= end_date)
 - discount entre 0 et 1
+- Suppression des lignes avec region 0 et 1.
 
 ```sql
 CREATE OR REPLACE TABLE SILVER.PROMOTIONS_CLEAN AS
