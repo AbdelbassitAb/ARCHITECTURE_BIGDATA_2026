@@ -35,7 +35,7 @@ WITH sales_daily AS (
 SELECT
   c.campaign_name,
   c.region,
-  SUM(s.daily_sales) AS sales_during_campaign
+  CAST(SUM(s.daily_sales) AS NUMBER(18,2)) AS sales_during_campaign
 FROM SILVER.MARKETING_CAMPAIGNS_CLEAN c
 LEFT JOIN sales_daily s
   ON s.region = c.region
@@ -44,6 +44,9 @@ GROUP BY c.campaign_name, c.region
 ORDER BY sales_during_campaign DESC NULLS LAST
 LIMIT 50;
 """)
+
+df_campaign_sales["SALES_DURING_CAMPAIGN"] = df_campaign_sales["SALES_DURING_CAMPAIGN"].astype(float)
+
 
 st.caption("Top campagnes par ventes pendant campagne — bar chart")
 if not df_campaign_sales.empty:

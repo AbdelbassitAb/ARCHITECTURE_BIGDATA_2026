@@ -25,6 +25,9 @@ GROUP BY status
 ORDER BY avg_delivery_days DESC;
 """)
 
+df_delivery["AVG_DELIVERY_DAYS"] = df_delivery["AVG_DELIVERY_DAYS"].astype(float)
+
+
 left, right = st.columns(2)
 
 with left:

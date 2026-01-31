@@ -224,6 +224,11 @@ QUALIFY ROW_NUMBER() OVER (
     IFF(review_text IS NULL OR TRIM(review_text) = '', 0, 1) DESC
 ) = 1;
 
+
+DELETE FROM SILVER.PRODUCT_REVIEWS_CLEAN
+WHERE rating < 1
+   OR rating > 5;
+
 --Volume BRONZE vs SILVER
 
 SELECT

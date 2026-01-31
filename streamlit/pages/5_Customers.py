@@ -31,6 +31,9 @@ GROUP BY issue_category
 ORDER BY avg_satisfaction ASC;
 """)
 
+df_service["AVG_SATISFACTION"] = df_service["AVG_SATISFACTION"].astype(float)
+
+
 left, right = st.columns(2)
 
 with left:
@@ -53,22 +56,10 @@ with right:
 
 st.divider()
 
-df_reviews = run_query("""
-SELECT product_category,
-       AVG(rating) AS avg_rating,
-       COUNT(*) AS nb_reviews
-FROM SILVER.PRODUCT_REVIEWS_CLEAN
-GROUP BY product_category
-ORDER BY avg_rating DESC;
-""")
 
-st.caption("Avis produits : note moyenne par catégorie — bar chart")
-if not df_reviews.empty:
-    st.bar_chart(df_reviews.set_index("PRODUCT_CATEGORY")[["AVG_RATING"]])
 
 with st.expander("Voir tables"):
     st.dataframe(df_region, use_container_width=True)
     st.dataframe(df_gender, use_container_width=True)
     st.dataframe(df_marital, use_container_width=True)
     st.dataframe(df_service, use_container_width=True)
-    st.dataframe(df_reviews, use_container_width=True)

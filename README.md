@@ -3,29 +3,16 @@
 Projet réalisé dans le cadre du workshop **Data-Driven Marketing Analytics avec Snowflake et Streamlit**.  
 Objectif : construire un socle analytique fiable (ingestion + nettoyage), produire des analyses business, puis industrialiser ces analyses sous forme de **data product** prêt pour la BI et le Machine Learning.
 
-**🆕 NEW: AI-Powered Promo Planning** - Predict promotion ROI before launch with ML models!
+## 🔐 Accès Snowflake
 
----
 
-## 🚀 Quick Start - Run the ML Demo
+- **URL** : https://pcvplxy-rrb95749.snowflakecomputing.com  
+- **Login** : mbaesg  
+- **Password** : Test@123456@123  
+- **Database** : ANYCOMPANY_LAB  
+- **Warehouse** : WH_LAB  
 
-```powershell
-# 1. Create ML feature tables in Snowflake
-# Execute: sql/phase_3/2_ml_feature_tables.sql
 
-# 2. Train ML models (2 minutes)
-python streamlit/ml_models/promo_optimizer.py
-
-# 3. Launch Streamlit
-cd streamlit
-python -m streamlit run Home.py
-
-# 4. Navigate to "7_Promo_Planner" and predict ROI!
-```
-
-📖 **Full ML Guide**: See `ML_IMPLEMENTATION_README.md`
-
----
 
 ## 1) Contexte & objectif business
 
@@ -538,19 +525,18 @@ Une page par analyse (multi-pages Streamlit) :
 Connexion Snowflake via `.streamlit/secrets.toml` (non versionné).
 
 ---
-
 ## 8) Structure du projet
 
-```
+
 SNOWFLAKE/
+├── ml/
 ├── sql/
 │ ├── phase_1/
-│ │ ├── 1_preparation_environnement.sql
+│ │ ├── 1_préparation_environnement.sql
 │ │ ├── 2_creation_tables.sql
 │ │ ├── 3_chargement_donnée.sql
 │ │ ├── 4_verification_chargement.sql
 │ │ └── 5_clean_data.sql
-│ │
 │ ├── phase_2/
 │ │ ├── 1_comprehension_donné.sql
 │ │ ├── 2_analyses_exploratoires_descriptives.sql
@@ -558,32 +544,51 @@ SNOWFLAKE/
 │ │ ├── 3.2_campaign_performance.sql
 │ │ ├── 3.3_experience_client.sql
 │ │ └── 3.4_operation_et_logistique.sql
-│ │
 │ └── phase_3/
-│ └── 1_creation_data_product.sql
-│
+│ ├── 1_creation_data_product.sql
+│ └── 2_ml_feature_tables.sql
 ├── streamlit/
-│ ├── Home.py
-│ ├── _utils.py
+│ ├── .streamlit/
+│ │ ├── config.toml
+│ │ └── secrets.toml
+│ ├── ml_models/
 │ ├── pages/
-│ │ ├── sales_dashboard.py
-│ │ ├── promotion_analysis.py
-│ │ ├── marketing_roi.py
-│ │ ├── customer_segmentation.py
-│ │ └── operations_logistics.py
-│ └── .streamlit/
-│ └── secrets.toml (local only)
-│
-├── ml/
-│ └── (modèles Machine Learning – optionnel)
-│
+│ ├── _utils.py
+│ ├── check_databases.py
+│ ├── check_sql_ready.py
+│ └── Home.py
 ├── business_insights.md
-└── README.md
-```
+├── README.md
+└── requirements.txt
+
+
+---
+## 9) AI-Powered Promo Planning** - Predict promotion ROI before launch with ML models!
 
 ---
 
-## 9) Notes et limites
+## 🚀 Quick Start - Run the ML Demo
+
+```powershell
+# 1. Create ML feature tables in Snowflake
+# Execute: sql/phase_3/2_ml_feature_tables.sql
+
+# 2. Train ML models (2 minutes)
+python streamlit/ml_models/promo_optimizer.py
+
+# 3. Launch Streamlit
+cd streamlit
+python -m streamlit run Home.py
+
+# 4. Navigate to "7_Promo_Planner" and predict ROI!
+```
+
+📖 **Full ML Guide**: See `ML_IMPLEMENTATION_README.md`
+
+---
+
+
+## 10) Notes et limites
 
 - Les données étant **générées**, certaines clés (ex : `store_id`) ne reflètent pas toujours une logique métier réaliste.
 - Absence de `customer_id` dans les transactions : les analyses ventes/clients restent séparées.
@@ -591,24 +596,12 @@ SNOWFLAKE/
 
 ---
 
-## 10) Lancer l’app Streamlit
+## 11) Lancer l’app Streamlit
 
-Depuis la racine :
+Depuis la dossier streamlit :
 
 ```bash
 streamlit run Home.py
-```
-
----
-
-## 11) Sécurité / GitHub
-
-Le fichier de secrets ne doit jamais être commité :
-
-Dans `.gitignore` :
-
-```
-.streamlit/secrets.toml
 ```
 
 ---
