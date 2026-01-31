@@ -1,0 +1,16 @@
+# AnyCompany Analytics - Python Dependencies
+# Core
+streamlit>=1.30.0
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Database
+snowflake-connector-python[pandas]>=3.0.0
+pyarrow>=10.0.0
+
+# Machine Learning
+scikit-learn>=1.3.0
+
+# Optional: Advanced forecasting (for Phase 3 Use Case 1)
+# prophet>=1.1.0
+# statsmodels>=0.14.0

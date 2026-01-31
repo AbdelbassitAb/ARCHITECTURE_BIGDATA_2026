@@ -1,7 +1,29 @@
-# AnyCompany Food & Beverage – Data-Driven Marketing Analytics (Snowflake + Streamlit)
+# AnyCompany Food & Beverage – Data-Driven Marketing Analytics (Snowflake + Streamlit + ML)
 
 Projet réalisé dans le cadre du workshop **Data-Driven Marketing Analytics avec Snowflake et Streamlit**.  
 Objectif : construire un socle analytique fiable (ingestion + nettoyage), produire des analyses business, puis industrialiser ces analyses sous forme de **data product** prêt pour la BI et le Machine Learning.
+
+**🆕 NEW: AI-Powered Promo Planning** - Predict promotion ROI before launch with ML models!
+
+---
+
+## 🚀 Quick Start - Run the ML Demo
+
+```powershell
+# 1. Create ML feature tables in Snowflake
+# Execute: sql/phase_3/2_ml_feature_tables.sql
+
+# 2. Train ML models (2 minutes)
+python streamlit/ml_models/promo_optimizer.py
+
+# 3. Launch Streamlit
+cd streamlit
+python -m streamlit run Home.py
+
+# 4. Navigate to "7_Promo_Planner" and predict ROI!
+```
+
+📖 **Full ML Guide**: See `ML_IMPLEMENTATION_README.md`
 
 ---
 
