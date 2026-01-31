@@ -527,7 +527,7 @@ Connexion Snowflake via `.streamlit/secrets.toml` (non versionné).
 ---
 ## 8) Structure du projet
 
-
+```text
 SNOWFLAKE/
 ├── ml/
 ├── sql/
