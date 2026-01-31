@@ -1,3 +1,15 @@
+-- ============================================================
+-- ÉTAPE 4 – VÉRIFICATIONS (BRONZE & JSON RAW)
+-- Objectifs :
+-- 1) Vérifier le nombre de lignes
+-- 2) Inspecter un échantillon (SELECT * LIMIT 10)
+-- 3) Identifier les colonnes clés (IDs, dates, produits, régions)
+-- ============================================================
+
+USE DATABASE ANYCOMPANY_LAB;
+USE SCHEMA BRONZE;
+-- USE WAREHOUSE WH_LAB;
+
 -- ------------------------------------------------------------
 -- 0) VÉRIFICATION DES VOLUMES (toutes les tables BRONZE)
 -- => Permet de détecter une table vide ou un chargement partiel

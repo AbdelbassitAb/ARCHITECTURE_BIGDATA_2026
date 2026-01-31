@@ -1,5 +1,5 @@
-//2.3.3 Expérience client
-//A) Impact des avis produits (proxy : note moyenne par catégorie)
+--2.3.3 Expérience client
+--A) Impact des avis produits (proxy : note moyenne par catégorie)
 
 SELECT
   product_category,
@@ -10,7 +10,7 @@ GROUP BY product_category
 ORDER BY avg_rating DESC;
 
 
-//B) Influence du service client (satisfaction par type de problème)
+--B) Influence du service client (satisfaction par type de problème)
 
 SELECT
   issue_category,

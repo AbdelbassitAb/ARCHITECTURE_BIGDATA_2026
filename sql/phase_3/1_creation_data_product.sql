@@ -1,10 +1,10 @@
-//🚀 Phase 3 – Data Product & Machine Learning
+--🚀 Phase 3 – Data Product & Machine Learning
 
-//🧩 Partie 3.1 – Création du Data Product (ANALYTICS)
+--🧩 Partie 3.1 – Création du Data Product (ANALYTICS)
 
 CREATE SCHEMA IF NOT EXISTS ANALYTICS;
 
-//🧱 Table 1 – ANALYTICS.SALES_ENRICHED
+--🧱 Table 1 – ANALYTICS.SALES_ENRICHED
 
 CREATE OR REPLACE TABLE ANALYTICS.SALES_ENRICHED AS
 WITH sales AS (
@@ -55,7 +55,7 @@ LEFT JOIN promo_flag p ON s.transaction_id = p.transaction_id
 LEFT JOIN campaign_flag c ON s.transaction_id = c.transaction_id;
 
 
-//🧱 Table 2 – ANALYTICS.ACTIVE_PROMOTIONS
+--🧱 Table 2 – ANALYTICS.ACTIVE_PROMOTIONS
 
 CREATE OR REPLACE TABLE ANALYTICS.ACTIVE_PROMOTIONS AS
 SELECT
@@ -69,7 +69,7 @@ SELECT
 FROM SILVER.PROMOTIONS_CLEAN;
 
 
-//🧱 Table 3 – ANALYTICS.CUSTOMERS_ENRICHED
+--🧱 Table 3 – ANALYTICS.CUSTOMERS_ENRICHED
 
 CREATE OR REPLACE TABLE ANALYTICS.CUSTOMERS_ENRICHED AS
 SELECT
@@ -88,13 +88,13 @@ SELECT
 FROM SILVER.CUSTOMER_DEMOGRAPHICS_CLEAN;
 
 
-//✅ Vérifications – Cohérence métier
+--✅ Vérifications – Cohérence métier
 
 SELECT COUNT(*) FROM ANALYTICS.SALES_ENRICHED;
 SELECT COUNT(*) FROM ANALYTICS.ACTIVE_PROMOTIONS;
 SELECT COUNT(*) FROM ANALYTICS.CUSTOMERS_ENRICHED;
 
-//2️⃣ Vérifier les flags
+--2️⃣ Vérifier les flags
 
 SELECT
   is_promo_period,

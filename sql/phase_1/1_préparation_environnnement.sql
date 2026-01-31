@@ -54,7 +54,7 @@ CREATE OR REPLACE FILE FORMAT FF_JSON
 
 --2- stage s3
 CREATE OR REPLACE STAGE STG_FOOD_BEVERAGE
-  URL = 's3://logbrain-datalake/datasets/food-beverage/'
+  URL = 's3:--logbrain-datalake/datasets/food-beverage/'
   FILE_FORMAT = FF_CSV;
 
 --test 
