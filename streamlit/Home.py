@@ -14,6 +14,7 @@ Utilise le menu à gauche pour naviguer entre les dashboards.
 - Marketing ROI (campagnes les plus efficaces)
 - Customer Segmentation (segments démographiques)
 - Operations & Logistics (stocks & délais)
+- **🆕 Promo Planner** (AI-powered ROI predictions)
 """
 )
 
